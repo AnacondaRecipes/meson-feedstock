@@ -14,15 +14,16 @@ source:
 
 build:
   number: 0
-  script: python -m pip install --no-deps --ignore-installed meson
+  skip: True  # [py<35]
+  script: pip install --no-deps --ignore-installed .
 
 requirements:
-  build:
-    - python >=3.5
+  host:
+    - python
     - setuptools
     - pip
   run:
-    - python >=3.5
+    - python
     - ninja >=1.8.2
 
 test:
@@ -41,3 +42,4 @@ extra:
   recipe-maintainers:
     - dirmeier
     - SoapZA
+    - msarahan
