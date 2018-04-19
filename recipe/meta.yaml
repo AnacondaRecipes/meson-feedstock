@@ -15,15 +15,15 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
-  noarch: python
+  skip: True  # [py<35]
 
 requirements:
   host:
-    - python >=3.5
+    - python
     - setuptools
     - pip
   run:
-    - python >=3.5
+    - python
     - ninja >=1.8.2
 
 test:
@@ -44,3 +44,4 @@ extra:
   recipe-maintainers:
     - dirmeier
     - SoapZA
+    - msarahan
