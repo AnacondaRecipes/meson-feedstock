@@ -1,0 +1,13 @@
+diff -urN work.orig/setup.py work/setup.py
+--- work.orig/setup.py	2018-08-04 04:47:19.859363400 -0500
++++ work/setup.py	2018-08-04 04:49:09.568680800 -0500
+@@ -76,6 +76,9 @@
+                'mesontest.py',
+                'mesonintrospect.py',
+                'wraptool.py'],
++      entry_points = {
++        'console_scripts': ['meson=meson:main'],
++      },
+       cmdclass={'install_scripts': install_scripts},
+       data_files=[('share/man/man1', ['man/meson.1',
+                                       'man/mesonconf.1',

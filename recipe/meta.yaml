@@ -11,17 +11,20 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+#  patches:
+#    - 0001-Add-entry_points-console_scripts.patch
 
 build:
   number: 0
   skip: True  # [py<35]
-  script: pip install --no-deps --ignore-installed .
+  script: {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
+  entry_points:
+    - meson = mesonbuild.mesonmain:main
 
 requirements:
   host:
     - python
     - setuptools
-    - pip
   run:
     - python
     - ninja >=1.8.2
