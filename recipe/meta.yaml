@@ -16,6 +16,8 @@ build:
   number: 0
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
   skip: True  # [py<35]
+  entry_points:
+    - meson = mesonbuild.mesonmain:main
 
 requirements:
   host:
