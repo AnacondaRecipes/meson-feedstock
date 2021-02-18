@@ -9,7 +9,9 @@ Feedstock license: BSD-3-Clause
 
 Summary: The Meson Build System
 
+Development: https://github.com/mesonbuild/meson
 
+Documentation: https://mesonbuild.com
 
 Current build status
 ====================
@@ -119,4 +121,6 @@ Feedstock Maintainers
 * [@SoapZA](https://github.com/SoapZA/)
 * [@dirmeier](https://github.com/dirmeier/)
 * [@pkgw](https://github.com/pkgw/)
+* [@tschoonj](https://github.com/tschoonj/)
+* [@wolfv](https://github.com/wolfv/)
 

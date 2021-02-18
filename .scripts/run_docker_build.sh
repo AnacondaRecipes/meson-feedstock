@@ -45,8 +45,12 @@ fi
 if [ -z "${DOCKER_IMAGE}" ]; then
     SHYAML_INSTALLED="$(shyaml -h || echo NO)"
     if [ "${SHYAML_INSTALLED}" == "NO" ]; then
-        echo "WARNING: DOCKER_IMAGE variable not set and shyaml not installed. Falling back to condaforge/linux-anvil-comp7"
-        DOCKER_IMAGE="condaforge/linux-anvil-comp7"
+        echo "WARNING: DOCKER_IMAGE variable not set and shyaml not installed. Trying to parse with coreutils"
+        DOCKER_IMAGE=$(cat .ci_support/${CONFIG}.yaml | grep '^docker_image:$' -A 1 | tail -n 1 | cut -b 3-)
+        if [ "${DOCKER_IMAGE}" = "" ]; then
+            echo "No docker_image entry found in ${CONFIG}. Falling back to condaforge/linux-anvil-comp7"
+            DOCKER_IMAGE="condaforge/linux-anvil-comp7"
+        fi
     else
         DOCKER_IMAGE="$(cat "${FEEDSTOCK_ROOT}/.ci_support/${CONFIG}.yaml" | shyaml get-value docker_image.0 condaforge/linux-anvil-comp7 )"
     fi
@@ -64,8 +68,13 @@ fi
 
 export UPLOAD_PACKAGES="${UPLOAD_PACKAGES:-True}"
 docker run ${DOCKER_RUN_ARGS} \
+<<<<<<< HEAD:.scripts/run_docker_build.sh
            -v "${RECIPE_ROOT}":/home/conda/recipe_root:rw,z \
            -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root:rw,z \
+=======
+           -v "${RECIPE_ROOT}":/home/conda/recipe_root:rw,z,delegated \
+           -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root:rw,z,delegated \
+>>>>>>> 9ccdddc6695586f3fc795d65ae1acb2d2f71185c:.azure-pipelines/run_docker_build.sh
            -e CONFIG \
            -e HOST_USER_ID \
            -e UPLOAD_PACKAGES \
@@ -74,6 +83,11 @@ docker run ${DOCKER_RUN_ARGS} \
            -e CI \
            -e FEEDSTOCK_NAME \
            -e CPU_COUNT \
+<<<<<<< HEAD:.scripts/run_docker_build.sh
+=======
+           -e BUILD_WITH_CONDA_DEBUG \
+           -e BUILD_OUTPUT_ID \
+>>>>>>> 9ccdddc6695586f3fc795d65ae1acb2d2f71185c:.azure-pipelines/run_docker_build.sh
            -e BINSTAR_TOKEN \
            -e FEEDSTOCK_TOKEN \
            -e STAGING_BINSTAR_TOKEN \
