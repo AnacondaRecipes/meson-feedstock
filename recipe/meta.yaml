@@ -23,13 +23,17 @@ requirements:
     - python >=3.6
     - setuptools
     - pip
+    - wheel
   run:
     - python >=3.6
     - ninja >=1.8.2
     - setuptools
 
 test:
+  requires:
+    - pip
   commands:
+    - pip check
     - meson -h
     - meson -v
     - meson --internal delsuffix . nomatchqqq  # test reexecution (GitHub issue #11)
