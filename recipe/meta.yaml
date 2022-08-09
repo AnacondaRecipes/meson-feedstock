@@ -1,6 +1,6 @@
 {% set name = "meson" %}
-{% set version = "0.59.0" %}
-{% set sha256 = "e376c298df64b643dfe01eccb2d7b6f1e02e95aa38c19f19d120d129612ce476" %}
+{% set version = "0.62.2" %}
+{% set sha256 = "a7669e4c4110b06b743d57cc5d6432591a6677ef2402139fe4f3d42ac13380b0" %}
 
 package:
   name: {{ name|lower }}
@@ -13,21 +13,20 @@ source:
 
 build:
   number: 0
+  skip: True # [py<37]
   script: {{ PYTHON }} -m pip install . -vv
-  noarch: python
   entry_points:
     - meson = mesonbuild.mesonmain:main
 
 requirements:
   host:
-    - python >=3.6
-    - setuptools
+    - python
+    - setuptools >=42
     - pip
     - wheel
   run:
-    - python >=3.6
+    - python
     - ninja >=1.8.2
-    - setuptools
 
 test:
   requires:
@@ -42,7 +41,7 @@ about:
   home: https://mesonbuild.com
   license: Apache-2.0
   license_family: Apache
-  license_file: {{ environ["RECIPE_DIR"] }}/LICENSE
+  license_file: COPYING
   summary: The Meson Build System
   doc_url: https://mesonbuild.com
   dev_url: https://github.com/mesonbuild/meson
