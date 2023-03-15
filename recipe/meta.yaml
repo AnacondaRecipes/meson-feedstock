@@ -17,7 +17,7 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vvv --no-deps
-  skip: True  # [py<36]
+  skip: True  # [py<37]
   entry_points:
     - meson = mesonbuild.mesonmain:main
 
