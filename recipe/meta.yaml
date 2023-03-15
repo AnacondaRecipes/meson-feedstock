@@ -21,7 +21,6 @@ build:
   entry_points:
     - meson = mesonbuild.mesonmain:main
 
-
 requirements:
   build:
     - patch     # [not win]
