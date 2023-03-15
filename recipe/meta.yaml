@@ -23,6 +23,10 @@ build:
 
 
 requirements:
+  build:
+    - patch     # [not win]
+    - m2-patch  # [win]
+
   host:
     - python
     - setuptools >=42
@@ -59,6 +63,7 @@ about:
 
 extra:
   skip-lints:
+    - python_build_tool_in_run  # meson is build tool that uses pip, wheel, setuptools
     - build_tools_must_be_in_build  # meson is a build tool that can use ninja
     - missing_imports_or_run_test_py  # meson does not install the meson module (done by meson-python)
   recipe-maintainers:
