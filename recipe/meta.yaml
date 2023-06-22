@@ -1,6 +1,6 @@
 {% set name = "meson" %}
-{% set version = "1.0.1" %}
-{% set sha256 = "d926b730de6f518728cc7c57bc5e701667bae0c3522f9e369427b2cc7839d3c1" %}
+{% set version = "1.1.1" %}
+{% set sha256 = "d04b541f97ca439fb82fab7d0d480988be4bd4e62563a5ca35fadb5400727b1c" %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +16,7 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vvv --no-deps
+  script: {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
   skip: True  # [py<37]
   entry_points:
     - meson = mesonbuild.mesonmain:main
@@ -25,7 +25,6 @@ requirements:
   build:
     - patch     # [not win]
     - m2-patch  # [win]
-
   host:
     - python
     - setuptools >=42
@@ -51,7 +50,7 @@ about:
   home: https://mesonbuild.com
   license: Apache-2.0
   license_family: Apache
-  license_file: {{ environ["RECIPE_DIR"] }}/LICENSE
+  license_file: COPYING
   summary: The Meson Build System
   description: |
     Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible.
