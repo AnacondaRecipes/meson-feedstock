@@ -13,7 +13,7 @@ source:
     - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: True  # [py<37]
   entry_points:
