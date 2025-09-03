@@ -1,44 +1,72 @@
 {% set name = "meson" %}
-{% set version = "1.6.0" %}
+{% set version = "1.9.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/meson-{{ version }}.tar.gz
-  sha256: 999b65f21c03541cf11365489c1fad22e2418bb0c3d50ca61139f2eec09d5496
-  # See conda-forge/glib-feedstock#40 for documentation regarding the RPATH patch
-  patches:
-    - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/meson-{{ version }}.tar.gz
+    sha256: cd27277649b5ed50d19875031de516e270b22e890d9db65ed9af57d18ebc498d
+    # See conda-forge/glib-feedstock#40 for documentation regarding the RPATH patch
+    patches:
+      - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
+  - url: https://github.com/mesonbuild/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+    sha256: 12ca5979a3a625c8944e093c17c32c4c2bd03a48c8877354d88a7077860ef740
+    folder: gh
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<37]
+  skip: true  # [py<37]
   entry_points:
     - meson = mesonbuild.mesonmain:main
 
 requirements:
-  build:
-    - patch     # [not win]
-    - m2-patch  # [win]
   host:
+    - pip
     - python
     - setuptools >=42
-    - pip
     - wheel
+    - setuptools-scm
   run:
     - python
-    - ninja >=1.8.2
+  run_constrained:
+    - ninja-base >=1.8.2
 
 test:
   imports:
     - mesonbuild
+    - mesonbuild.ast
+    - mesonbuild.build
+    - mesonbuild.cargo
+    - mesonbuild.compilers
+    - mesonbuild.coredata
+    - mesonbuild.dependencies
+    - mesonbuild.depfile
+    - mesonbuild.envconfig
+    - mesonbuild.environment
+    - mesonbuild.interpreter
+    - mesonbuild.interpreterbase
+    - mesonbuild.linkers
+    - mesonbuild.machinefile
+    - mesonbuild.mesonlib
+    - mesonbuild.mformat
+    - mesonbuild.mlog
+    - mesonbuild.modules
+    - mesonbuild.msetup
+    - mesonbuild.mtest
+    - mesonbuild.optinterpreter
+    - mesonbuild.options
+    - mesonbuild.programs
+    - mesonbuild.scripts
+    - mesonbuild.templates
+    - mesonbuild.wrap
   requires:
     - pip
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - meson -h
     - meson -v
     - meson --internal delsuffix . nomatchqqq  # test reexecution (GitHub issue #11)
