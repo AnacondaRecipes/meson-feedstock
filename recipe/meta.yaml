@@ -6,14 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/meson-{{ version }}.tar.gz
-    sha256: cd27277649b5ed50d19875031de516e270b22e890d9db65ed9af57d18ebc498d
-    # See conda-forge/glib-feedstock#40 for documentation regarding the RPATH patch
-    patches:
-      - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
-  - url: https://github.com/mesonbuild/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-    sha256: 12ca5979a3a625c8944e093c17c32c4c2bd03a48c8877354d88a7077860ef740
-    folder: gh
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/meson-{{ version }}.tar.gz
+  sha256: cd27277649b5ed50d19875031de516e270b22e890d9db65ed9af57d18ebc498d
+  # See conda-forge/glib-feedstock#40 for documentation regarding the RPATH patch
+  patches:
+    - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
 
 build:
   number: 0
