@@ -1,21 +1,21 @@
 {% set name = "meson" %}
-{% set version = "1.9.0" %}
+{% set version = "1.10.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/meson-{{ version }}.tar.gz
-  sha256: cd27277649b5ed50d19875031de516e270b22e890d9db65ed9af57d18ebc498d
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8071860c1f46a75ea34801490fd1c445c9d75147a65508cd3a10366a7006cc1c
   # See conda-forge/glib-feedstock#40 for documentation regarding the RPATH patch
   patches:
     - 0001-Only-fix-RPATH-if-install_rpath-is-not-empty.patch
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<37]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
     - meson = mesonbuild.mesonmain:main
 
@@ -25,7 +25,6 @@ requirements:
     - python
     - setuptools >=42
     - wheel
-    - setuptools-scm
   run:
     - python
     - ninja-base >=1.8.2
